@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let img1=new Promise((resolve,reject)=>{
+        //        let imgsrc=new Image()
+        //     imgsrc.onload=resolve;
+        //     imgsrc.src='https://cbu01.alicdn.com/img/ibank/2018/074/025/9428520470_1735480233.220x220.jpg'
+        //  })
+        // let img2=new Promise(function(resolve,reject){
+        //     resolve('success')
+        // })
+        // let img3=new Promise(function(resolve,reject){
+        //     resolve('成功')
+        // })
+        // let img4=new Promise(function(resolve,reject){
+        //     resolve('成功')
+        // })
+        // //('https://cbu01.alicdn.com/img/ibank/2018/074/025/9428520470_1735480233.220x220.jpg')
+        // Promise.all([img1,img2,img3,img4]).then((res)=>{
+        //     console.log(res)
+        // }).catch((err)=>{
+        //     console.log(err)
+        // })
+  
+        function preLoadImg(source){
+        let pr = [];
+        source.forEach(url => {// 预加载图片
+            let p = loadImage(url)
+                    .then(img => this.images.push(img))
+                    .catch(err => console.log(err))
+            pr.push(p);
+        })
+
+        // 图片全部加载完
+        Promise.all(pr).then(() => {
+            preLoadImg(['https://cbu01.alicdn.com/img/ibank/2018/074/025/9428520470_1735480233.220x220.jpg','https://cbu01.alicdn.com/img/ibank/2018/074/025/9428520470_1735480233.220x220.jpg'])
+                });
+
+    }
+    // 预加载图片
+    function loadImage(url) {
+        return new Promise((resolve, reject) => {
+            let img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = url;
+        })
+    }
+    
+    </script>
+</body>
+</html>
